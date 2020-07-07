@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:today_plans/models/tasks.dart';
 
 class AddTaskScreen extends StatelessWidget {
   final Function addAnotherTask;

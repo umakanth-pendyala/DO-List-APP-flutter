@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:today_plans/models/task_data.dart';
 import 'package:today_plans/models/tasks.dart';
 import 'package:today_plans/screens/bottom_screen.dart';
 import 'package:today_plans/widgets/task_list.dart';
+import 'package:provider/provider.dart';
 
 class TasksScreen extends StatefulWidget {
   // const TaskScreen({Key key}) : super(key: key);
@@ -13,24 +15,18 @@ class TasksScreen extends StatefulWidget {
 class _TasksScreenState extends State<TasksScreen> {
   bool checkBoxValue = false;
 
-  List<Task> tasks = [
-    Task(nameOfTheTask: 'Complete the Tasks app'),
-    Task(nameOfTheTask: 'Eat something'),
-    Task(nameOfTheTask: 'DO workout'),
-  ];
-
-  addAnotherTask(Task newTask) {
-    setState(() {
-      tasks.add(newTask);
-    });
-  }
+  // addAnotherTask(Task newTask) {
+  //   setState(() {
+  //     tasks.add(newTask);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: Color(0xff78c8a1),
-        systemNavigationBarColor: Colors.grey,
+        statusBarColor: Colors.lightBlueAccent,
+        systemNavigationBarColor: Colors.black,
       ),
     );
 
@@ -71,7 +67,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
                 Text(
-                  '${tasks.length} tasks',
+                  '${Provider.of<TaskData>(context).tasks.length} tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -93,9 +89,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   topRight: Radius.circular(30.0),
                 ),
               ),
-              child: Tasks(
-                tasks: tasks,
-              ),
+              child: Tasks(),
             ),
           ),
         ],
@@ -106,9 +100,9 @@ class _TasksScreenState extends State<TasksScreen> {
             context: context,
             builder: (context) => AddTaskScreen(
               addAnotherTask: (String newTaskTitle) {
-                setState(() {
-                  tasks.add(Task(nameOfTheTask: newTaskTitle));
-                });
+                // setState(() {
+                //   tasks.add(Task(nameOfTheTask: newTaskTitle));
+                // });
                 Navigator.pop(context); // it will pop the bottom screen
               },
             ),

@@ -9,21 +9,27 @@ class Tasks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: Provider.of<TaskData>(context).tasks.length,
-      itemBuilder: (context, index) {
-        return TaskTile(
-            nameOfTheTask:
-                Provider.of<TaskData>(context).tasks[index].nameOfTheTask,
-            isChecked: Provider.of<TaskData>(context).tasks[index].taskStatus,
-            // onTaskCompleted: (checkBoxState) {
-            //   setState(() {
-            //     tasks[index].updateTaskStatus();
-            //   });
-            // }, // pass this method as a prop.
-            onTaskCompleted: (checkBoxState) =>
-                print('welcome') //onTaskChanged(index),
-            );
+    return Consumer<TaskData>(
+      // its always better to provide the data type in angle brackets to make this even more simpler
+      //Consumer is just used to make the code typing simpler
+      //it converts Provider.of<TaskData>(context) === taskData
+      builder: (context, taskData, child) {
+        return ListView.builder(
+          itemCount: taskData.taskCount,
+          itemBuilder: (context, index) {
+            return TaskTile(
+                nameOfTheTask: taskData.tasks[index].nameOfTheTask,
+                isChecked: taskData.tasks[index].taskStatus,
+                // onTaskCompleted: (checkBoxState) {
+                //   setState(() {
+                //     tasks[index].updateTaskStatus();
+                //   });
+                // }, // pass this method as a prop.
+                onTaskCompleted: (checkBoxState) =>
+                    print('welcome') //onTaskChanged(index),
+                );
+          },
+        );
       },
     );
   }

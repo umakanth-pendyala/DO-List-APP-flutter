@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:today_plans/models/tasks.dart';
 import 'package:today_plans/screens/bottom_screen.dart';
 import 'package:today_plans/widgets/task_list.dart';
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
   // const TaskScreen({Key key}) : super(key: key);
+  @override
+  _TasksScreenState createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
   bool checkBoxValue = false;
-  final TextEditingController newTaskController = TextEditingController();
+
+  List<Task> tasks = [
+    Task(nameOfTheTask: 'Complete the Tasks app'),
+    Task(nameOfTheTask: 'Eat something'),
+    Task(nameOfTheTask: 'DO workout'),
+  ];
+
+  addAnotherTask(Task newTask) {
+    setState(() {
+      tasks.add(newTask);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +93,9 @@ class TasksScreen extends StatelessWidget {
                   topRight: Radius.circular(30.0),
                 ),
               ),
-              child: Tasks(),
+              child: Tasks(
+                tasks: tasks,
+              ),
             ),
           ),
         ],
@@ -85,7 +104,7 @@ class TasksScreen extends StatelessWidget {
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            builder: bottomSheetContainer,
+            builder: (context) => AddTaskScreen(),
             isScrollControlled: true,
           );
         },

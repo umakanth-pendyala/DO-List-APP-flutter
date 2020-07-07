@@ -71,7 +71,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
                 Text(
-                  '12 tasks',
+                  '${tasks.length} tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -104,7 +104,14 @@ class _TasksScreenState extends State<TasksScreen> {
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            builder: (context) => AddTaskScreen(),
+            builder: (context) => AddTaskScreen(
+              addAnotherTask: (String newTaskTitle) {
+                setState(() {
+                  tasks.add(Task(nameOfTheTask: newTaskTitle));
+                });
+                Navigator.pop(context); // it will pop the bottom screen
+              },
+            ),
             isScrollControlled: true,
           );
         },

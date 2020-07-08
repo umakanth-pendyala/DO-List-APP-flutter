@@ -99,13 +99,13 @@ class _TasksScreenState extends State<TasksScreen> {
           showModalBottomSheet(
             context: context,
             builder: (context) => AddTaskScreen(
-              addAnotherTask: (String newTaskTitle) {
-                // setState(() {
-                //   tasks.add(Task(nameOfTheTask: newTaskTitle));
-                // });
-                Navigator.pop(context); // it will pop the bottom screen
-              },
-            ),
+                // addAnotherTask: (String newTaskTitle) {
+                //   // setState(() {
+                //   //   tasks.add(Task(nameOfTheTask: newTaskTitle));
+                //   // });
+                //   Navigator.pop(context); // it will pop the bottom screen
+                // },
+                ),
             isScrollControlled: true,
           );
         },

@@ -18,16 +18,16 @@ class Tasks extends StatelessWidget {
           itemCount: taskData.taskCount,
           itemBuilder: (context, index) {
             return TaskTile(
-                nameOfTheTask: taskData.tasks[index].nameOfTheTask,
-                isChecked: taskData.tasks[index].taskStatus,
-                // onTaskCompleted: (checkBoxState) {
-                //   setState(() {
-                //     tasks[index].updateTaskStatus();
-                //   });
-                // }, // pass this method as a prop.
-                onTaskCompleted: (checkBoxState) =>
-                    print('welcome') //onTaskChanged(index),
-                );
+              nameOfTheTask: taskData.getSpecificTask(index).nameOfTheTask,
+              isChecked: taskData.getSpecificTask(index).taskStatus,
+              // pass this method as a prop.,
+              onTaskCompleted: (checkBoxState) => taskData.updateTask(
+                taskData.getSpecificTask(index),
+              ), //onTaskChanged(index),
+              onLongPressedTile: () {
+                taskData.deleteSpecificTask(index);
+              },
+            );
           },
         );
       },

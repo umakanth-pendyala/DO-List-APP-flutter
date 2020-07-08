@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:today_plans/models/task_data.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  final Function addAnotherTask;
+  // final Function addAnotherTask;
 
-  AddTaskScreen({@required this.addAnotherTask});
+  // AddTaskScreen({@required this.addAnotherTask});
+  final TextEditingController newTaskController = TextEditingController();
+  bool validTask = true;
+
+  addAnotherTask(context) {
+    if (newTaskController.text.trim().isNotEmpty) {
+      Provider.of<TaskData>(context, listen: false)
+          .addTask(newTaskController.text);
+
+      Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController newTaskController = TextEditingController();
-    bool validTask = true;
-
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.only(
@@ -60,7 +70,7 @@ class AddTaskScreen extends StatelessWidget {
                 FlatButton(
                   padding: EdgeInsets.symmetric(vertical: 10.0),
                   color: Colors.lightBlueAccent,
-                  onPressed: () => addAnotherTask(newTaskController.text),
+                  onPressed: () => addAnotherTask(context),
                   child: Text(
                     'Add',
                     style: TextStyle(

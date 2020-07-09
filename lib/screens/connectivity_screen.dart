@@ -15,20 +15,6 @@ class _ConnectState extends State<Connect> {
   @override
   void initState() {
     super.initState();
-    // new Timer(Duration(seconds: 1), checkInternetConnection());
-
-    // checkInternetConnection();
-  }
-
-  checkInternetConnection() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile) {
-      // I am connected to a mobile network.
-      print('mobile data');
-    } else if (connectivityResult == ConnectivityResult.wifi) {
-      // I am connected to a wifi network.
-      print('wifi');
-    }
   }
 
   @override

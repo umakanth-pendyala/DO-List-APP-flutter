@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
     return ChangeNotifierProvider(
       create: (context) => TaskData(),
       child: MaterialApp(
-        home: Connect(),
+        home: TasksScreen(),
       ),
     );
   }

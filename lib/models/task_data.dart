@@ -32,14 +32,15 @@ class TaskData extends ChangeNotifier {
 
   void addTask(String taskName) async {
     _tasks.add(Task(nameOfTheTask: taskName));
-    await userTasks.add({'taskName': taskName, 'taskCompleted': false});
     notifyListeners();
+    await userTasks.add({'taskName': taskName, 'taskCompleted': false});
   }
 
   Task getSpecificTask(int index) => _tasks[index];
 
   void updateTask(Task task) async {
     task.updateTaskStatus();
+    notifyListeners();
     final QuerySnapshot snapshot = await userTasks
         .limit(1)
         .where('taskName', isEqualTo: task.nameOfTheTask)
@@ -53,12 +54,12 @@ class TaskData extends ChangeNotifier {
         },
       );
     }
-    notifyListeners();
   }
 
   void deleteSpecificTask(int index) async {
     String taskName = _tasks[index].nameOfTheTask;
     _tasks.removeAt(index);
+    notifyListeners();
     final QuerySnapshot snapshot = await userTasks
         .limit(1)
         .where('taskName', isEqualTo: taskName)
@@ -67,6 +68,5 @@ class TaskData extends ChangeNotifier {
     if (doc.exists) {
       doc.reference.delete();
     }
-    notifyListeners();
   }
 }

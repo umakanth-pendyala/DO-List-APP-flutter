@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:connectivity_widget/connectivity_widget.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:today_plans/screens/task_screen.dart';
 
@@ -34,7 +31,7 @@ class _ConnectState extends State<Connect> {
                   width: MediaQuery.of(context).size.width * 1,
                 ),
                 Text(
-                  'Please check your internet connection',
+                  'page loading time is very slow',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
                 ),

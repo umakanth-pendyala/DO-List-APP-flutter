@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:today_plans/models/task_data.dart';
-import 'package:today_plans/screens/connectivity_screen.dart';
 import 'package:today_plans/screens/task_screen.dart';
-import 'package:today_plans/models/task_data.dart';
 
 void main() {
   runApp(MyApp());

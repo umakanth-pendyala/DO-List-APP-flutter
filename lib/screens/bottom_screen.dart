@@ -7,7 +7,7 @@ class AddTaskScreen extends StatelessWidget {
 
   // AddTaskScreen({@required this.addAnotherTask});
   final TextEditingController newTaskController = TextEditingController();
-  bool validTask = true;
+  final bool validTask = true;
 
   addAnotherTask(context) {
     if (newTaskController.text.trim().isNotEmpty) {

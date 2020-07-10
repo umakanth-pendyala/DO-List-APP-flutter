@@ -1,17 +1,25 @@
 import 'package:flutter/widgets.dart';
 import 'package:today_plans/models/tasks.dart';
 import 'package:sqflite/sqflite.dart';
-import 'dart:io';
-import 'package:path/path.dart';
+import 'package:today_plans/services/database_helper.dart';
 
 // i used the local database in the phone with SQ lite
 
 class TaskData extends ChangeNotifier {
-  static Database _db;
-  static const todoTable = 'todo';
-  static const id = 'id';
-  static const name = 'name';
-  TaskData() {}
+  TaskData() {
+    getDocuments();
+  }
+
+  getDocuments() async {
+    _tasks = [];
+    List<Map<String, dynamic>> rows = await DatabaseHelper.instance.queryAll();
+    rows.forEach((element) {
+      _tasks.add(Task(
+          nameOfTheTask: element[DatabaseHelper.columnTask],
+          taskStatus: element[DatabaseHelper.taskStatus] == 1 ? true : false));
+    });
+    notifyListeners();
+  }
 
   // dynamic userTasks;
   List<Task> _tasks = [
@@ -24,49 +32,32 @@ class TaskData extends ChangeNotifier {
     return _tasks.length;
   }
 
-  void addTask(String taskName) {
+  void addTask(String taskName) async {
     _tasks.add(Task(nameOfTheTask: taskName));
+    int docuemntId = await DatabaseHelper.instance.insert({
+      DatabaseHelper.columnTask: taskName,
+      DatabaseHelper.taskStatus: 0,
+    });
     notifyListeners();
   }
 
   Task getSpecificTask(int index) => _tasks[index];
 
-  void updateTask(Task task) {
+  void updateTask(Task task) async {
     task.updateTaskStatus();
+    int numberOfRowsUpdated = await DatabaseHelper.instance.update({
+      DatabaseHelper.columnTask: task.nameOfTheTask,
+      DatabaseHelper.taskStatus: task.taskStatus ? 1 : 0,
+    });
     notifyListeners();
   }
 
   void deleteSpecificTask(int index) async {
+    Task tempTaskVariable = getSpecificTask(index);
     _tasks.removeAt(index);
+    int i = await DatabaseHelper.instance.delete(
+      tempTaskVariable.nameOfTheTask,
+    );
     notifyListeners();
-  }
-
-  Future<void> createTable(Database db) async {
-    final todoSql = '''CREATE TABLE $todoTable
-    (
-      'nameOfTheTask' TEXT,
-      'isCompleted' BIT NOT NULL
-    )''';
-    await db.execute(todoSql);
-  }
-
-  Future<String> getDatabasePath(String dataBaseName) async {
-    final dataBasePath = await getDatabasesPath();
-    final path = join(dataBasePath, dataBaseName);
-
-    if (await Directory(dirname(path)).exists()) {
-    } else {
-      await Directory(dirname(path)).create(recursive: true);
-    }
-    return path;
-  }
-
-  Future<void> initDataBase() async {
-    final path = await getDatabasePath('todo_db');
-    _db = await openDatabase(path, version: 1, onCreate: onCreate);
-  }
-
-  Future<void> onCreate(Database db, int version) async {
-    await createTable(db);
   }
 }

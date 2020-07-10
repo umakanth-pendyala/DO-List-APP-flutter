@@ -69,7 +69,7 @@ eg :
   Future<int> update(Map<String, dynamic> row) async {
     // you will update a row
     Database db = await instance.database;
-    int id = row[columnTask];
+    String id = row[columnTask];
     return db
         .update(_tableName, row, where: '$columnTask = ?', whereArgs: [id]);
 
